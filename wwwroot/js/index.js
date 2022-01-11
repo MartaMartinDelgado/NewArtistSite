@@ -11,7 +11,7 @@ theForm.hide();
 
 var button = $("#updateContent");
 button.on("click", function () {
-    alert("Updating Info");
+    console.log("Updating Info");
 });
 
 var musicianInfo = $(".musician-props li");
