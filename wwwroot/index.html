@@ -3,41 +3,45 @@
 <head>
     <title>Artist Site</title>
     <link href="css/site.css" rel="stylesheet" />
-    <script src="js/index.js"></script>
 </head>
 <body>
     <h2>Artist Site</h2>
-    <div>
-        <img src="img/AnaTest.JPG" />
+    <div class="musician-info">
+        <img src="img/AnaTest2.jpg" />
         <h3>
             Ana
         </h3>
-        <ul>
-            <li>Conservatorio: Plasencia, Espana</li>
-            <li>Grado Superior: San Sebastian, Espana</li>
-            <li>Master: Salzburgo, Austria</li>
+        <ul class="musician-props">
+            <li>Conservatory: Plasencia, Spain</li>
+            <li>High Grade: San Sebastian, Spain</li>
+            <li>Masters: Salzburg, Austria</li>
         </ul>
-        <button>Contenido</button>
+        <button id="updateContent">Update Info</button>
     </div>
 
-    <form>
-        <label>Estudios/Experiencia</label>
-        <br />
-        <input />
-        <br />
-        <label>Lugar</label>
-        <br />
-        <input type="text" />
-        <br />
-        <label>Fecha</label>
-        <br />
-        <input type="date" />
-        <br />
-        <label>Descripcion</label>
-        <br />
-        <textarea rows="4"></textarea>
-        <br />
-        <input type="submit" value="Guardar" />
-    </form>
+    <div id="theForm">
+        <form>
+            <label>Studies/Experience</label>
+            <br />
+            <input />
+            <br />
+            <label>Place</label>
+            <br />
+            <input type="text" />
+            <br />
+            <label>Date</label>
+            <br />
+            <input type="date" />
+            <br />
+            <label>Description</label>
+            <br />
+            <textarea rows="4"></textarea>
+            <br />
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+
+    <script src="js/index.js"></script>
+    <script src="lib/jquery/dist/jquery.js"></script>
 </body>
 </html>
