@@ -16,19 +16,33 @@ namespace ArtistSite
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             //HTML page to be served from the web browser
 
             //To get index.html without having to add it in the root
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
             app.UseStaticFiles();
             //The order matters
-            
+
+            // Enable the MVC
+            app.UseRouting();
+
+            app.UseEndpoints(cfg =>
+            {
+                cfg.MapControllerRoute("Default",
+                    "/{controller}/{action}/{id?}",
+                    new { controller = "App", action = "Index" });
+            });
         }
     }
 }
