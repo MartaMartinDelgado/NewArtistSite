@@ -11,7 +11,22 @@ namespace ArtistSite.Controllers
     {
         public IActionResult Index()
         {
-            throw new InvalidProgramException("An error ocurred");
+            return View();
+        }
+
+        [HttpGet("contact")]
+        public IActionResult Contact()
+        {
+            ViewBag.Title = "Contact Us";
+
+            return View();
+        }
+
+        [HttpGet("about")]
+        public IActionResult About()
+        {
+            ViewBag.Title = "About";
+
             return View();
         }
     }
