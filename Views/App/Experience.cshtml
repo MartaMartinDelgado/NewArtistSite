@@ -1,0 +1,37 @@
+﻿@model ExperienceViewModel
+@{
+    ViewBag.Title = "Experience";
+}
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+}
+<form method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <label asp-for="Role">Role</label>
+    <br />
+    <input asp-for="Role" />
+    <span asp-validation-for="Role"></span>
+    <br />
+    <label asp-for="Country">Country</label>
+    <br />
+    <input type="text" asp-for="Country" />
+    <span asp-validation-for="Country"></span>
+    <br />
+    <label asp-for="StartDate">Start Date</label>
+    <br />
+    <input type="date" asp-for="StartDate" />
+    <span asp-validation-for="StartDate"></span>
+    <br />
+    <label asp-for="EndDate">End Date</label>
+    <br />
+    <input type="date" asp-for="EndDate" />
+    <span asp-validation-for="EndDate"></span>
+    <br />
+    <label asp-for="Description">Description</label>
+    <br />
+    <textarea rows="4" asp-for="Description"></textarea>
+    <span asp-validation-for="Description"></span>
+    <br />
+    <input type="submit" value="Save" />
+</form>

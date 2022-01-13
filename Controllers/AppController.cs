@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ArtistSite.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,23 @@ namespace ArtistSite.Controllers
             return View();
         }
 
-        [HttpGet("contact")]
-        public IActionResult Contact()
+        [HttpGet("experience")]
+        public IActionResult Experience()
         {
-            ViewBag.Title = "Contact Us";
+            return View();
+        }
 
+        [HttpPost("experience")]
+        public IActionResult Experience(ExperienceViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Save to Exp list
+            }
+            else
+            {
+                // Show error
+            }
             return View();
         }
 
