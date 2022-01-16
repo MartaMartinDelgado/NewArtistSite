@@ -36,11 +36,11 @@
                 <input type="email" asp-for="ContactEmail" class="form-control" />
                 <span asp-validation-for="ContactEmail" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="PrivatePublic">Private / Public</label>
                 <input type="checkbox" asp-for="PrivatePublic" class="form-control" />
                 <span asp-validation-for="PrivatePublic" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary"><i class="fas fa-envelope"></i> Save</button>
                 <div class="text-success">@ViewBag.UserMessage</div>

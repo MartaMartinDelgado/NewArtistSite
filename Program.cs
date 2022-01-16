@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +24,7 @@ namespace ArtistSite
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(AddConfiguratio)
             //Create a default builder
                 .ConfigureWebHostDefaults(webBuilder =>
                 //Configure a web host
@@ -31,5 +33,15 @@ namespace ArtistSite
                     //For the startup object, for knowing how to configure it
                     //Use a class called Stratup
                 });
+
+        private static void AddConfiguratio(HostBuilderContext ctx, 
+            IConfigurationBuilder bldr)
+        {
+            bldr.Sources.Clear();
+
+            bldr.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("config.json")
+                .AddEnvironmentVariables();
+        }
     }
 }

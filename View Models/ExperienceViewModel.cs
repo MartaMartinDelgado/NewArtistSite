@@ -21,6 +21,6 @@ namespace ArtistSite.ViewModels
         [Required]
         [EmailAddress]
         public string ContactEmail { get; set; }
-        public bool PrivatePublic { get; set; }
+        //public bool PrivatePublic { get; set; }
     }
 }

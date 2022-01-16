@@ -1,0 +1,8 @@
+{
+	"Colors": {
+		"Favourite": "Blue"
+	},
+	"ConnectionStrings": {
+		"ArtistContextDb": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ArtistSiteDb;Integrated Security=True;Connect Timeout=30;MultipleActiveResultSets=true;"
+	}
+}
