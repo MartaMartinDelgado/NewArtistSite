@@ -10,18 +10,17 @@ namespace ArtistSite.ViewModels
     public class ExperienceViewModel
     {
         [Required]
-        public string Role { get; set; }
-        [Required]
-        public string Country { get; set; }
+        public string ArtistRole { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
         [Required]
         [MaxLength(1000)]
-        public string Description { get; set; }
+        public string RoleDescription { get; set; }
         [Required]
         [EmailAddress]
         public string ContactEmail { get; set; }
+        public bool PrivatePublic { get; set; }
     }
 }
