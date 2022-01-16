@@ -1,4 +1,5 @@
-﻿using ArtistSite.ViewModels;
+﻿using ArtistSite.Services;
+using ArtistSite.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,12 @@ namespace ArtistSite.Controllers
 {
     public class AppController : Controller
     {
+        private readonly IMailService _mailService;
+
+        public AppController(IMailService mailService)
+        {
+            _mailService = mailService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -27,11 +34,13 @@ namespace ArtistSite.Controllers
             if (ModelState.IsValid)
             {
                 // Save to Exp list
+                //test send email
+                _mailService.SendMessage("marta.martin.d93@gmail.com", model.Role, $"From: {model.ContactEmail}, Message: {model.Description}");
+                ViewBag.UserMessage = "Mail Sent";
+                ModelState.Clear();
+
             }
-            else
-            {
-                // Show error
-            }
+
             return View();
         }
 

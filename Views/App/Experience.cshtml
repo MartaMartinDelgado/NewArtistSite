@@ -33,5 +33,11 @@
     <textarea rows="4" asp-for="Description"></textarea>
     <span asp-validation-for="Description"></span>
     <br />
+    <label asp-for="ContactEmail">Contact Emal</label>
+    <br />
+    <input type="email" asp-for="ContactEmail" />
+    <span asp-validation-for="ContactEmail"></span>
+    <br />
     <input type="submit" value="Save" />
+    <div>@ViewBag.UserMessage</div>
 </form>

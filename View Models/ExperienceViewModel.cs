@@ -12,7 +12,6 @@ namespace ArtistSite.ViewModels
         [Required]
         public string Role { get; set; }
         [Required]
-        [EmailAddress]
         public string Country { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
@@ -21,5 +20,8 @@ namespace ArtistSite.ViewModels
         [Required]
         [MaxLength(1000)]
         public string Description { get; set; }
+        [Required]
+        [EmailAddress]
+        public string ContactEmail { get; set; }
     }
 }
