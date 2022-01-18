@@ -35,7 +35,7 @@ namespace ArtistSite.Controllers
             {
                 // Save to Exp list
                 //test send email
-                _mailService.SendMessage("marta.martin.d93@gmail.com", model.Role, $"From: {model.ContactEmail}, Message: {model.Description}");
+                _mailService.SendMessage("marta.martin.d93@gmail.com", model.ArtistRole, $"From: {model.ContactEmail}, Message: {model.RoleDescription}");
                 ViewBag.UserMessage = "Mail Sent";
                 ModelState.Clear();
 

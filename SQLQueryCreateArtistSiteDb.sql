@@ -49,3 +49,4 @@ PrivateContent bit NOT NULL,
 CONSTRAINT PK_Content PRIMARY KEY(ContentId),
 CONSTRAINT FK_Content_Category FOREIGN KEY(CategoryId) REFERENCES Category(CategoryId)
 )
+GO

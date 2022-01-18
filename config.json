@@ -3,6 +3,6 @@
 		"Favourite": "Blue"
 	},
 	"ConnectionStrings": {
-		"ArtistContextDb": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ArtistSiteDb;Integrated Security=True;Connect Timeout=30;MultipleActiveResultSets=true;"
+		"ArtistContextDb": "Data Source=(localdb)\\ProjectsV13;Initial Catalog=ArtistSiteDb;Integrated Security=True;Connect Timeout=30;MultipleActiveResultSets=true;"
 	}
 }
