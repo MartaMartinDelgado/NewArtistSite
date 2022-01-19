@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore;
+using DataLayer;
 
 namespace ArtistSite
 {
@@ -16,10 +19,50 @@ namespace ArtistSite
         //A Console App listening for Web Requests
         public static void Main(string[] args)
         {
-            //When the console app is run
-            //Create the host, builld the host and then run the host
-            CreateHostBuilder(args).Build().Run();
-            //Calling CreateHostBuilder
+            ////When the console app is run
+            ////Create the host, builld the host and then run the host
+            //CreateHostBuilder(args).Build().Run();
+            ////Calling CreateHostBuilder
+            ///
+            var host = BuildWebHost(args);
+
+            //var host = CreateHostBuilder(args).Build();
+
+            if (args.Length == 1 && args[0].ToLower() == "/seed")
+            {
+                RunSeeding(host);
+            }
+            else
+            {
+                host.Run();
+            }
+        }
+
+        private static void RunSeeding(IWebHost host)
+        {
+            var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
+
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var seeder = scope.ServiceProvider.GetService<ArtistSeeder>();
+                seeder.Seed();
+            }
+
+        }
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(SetupConfiguration)
+            .UseStartup<Startup>()
+            .Build();
+
+        private static void SetupConfiguration(WebHostBuilderContext ctx,
+            IConfigurationBuilder builder)
+        {
+            builder.Sources.Clear();
+
+            builder.AddJsonFile("config.json", false, true)
+                .AddEnvironmentVariables();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Artist>
+<h1>Artists</h1>
+<p>Count: @Model.Count()</p>
+@foreach (var a in Model)
+{
+    <li>@a.Username</li>
+}

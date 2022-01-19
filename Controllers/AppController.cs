@@ -1,5 +1,6 @@
 ﻿using ArtistSite.Services;
 using ArtistSite.ViewModels;
+using DataLayer;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace ArtistSite.Controllers
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
+        private readonly ArtistContext _context;
 
-        public AppController(IMailService mailService)
+        public AppController(IMailService mailService, ArtistContext context)
         {
             _mailService = mailService;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -50,6 +53,25 @@ namespace ArtistSite.Controllers
             ViewBag.Title = "About";
 
             return View();
+        }
+
+        //public IActionResult Content()
+        //{
+        //    var results = from c in _context.Contents
+        //                  orderby c.Category
+        //                  select c;
+
+        //    return View(results.ToList());
+        //}
+
+        [HttpGet("Artists")]
+        public IActionResult Artists()
+        {
+            var results = from a in _context.Artists
+                          orderby a.Username
+                          select a;
+
+            return View(results.ToList());
         }
     }
 }
