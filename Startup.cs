@@ -1,3 +1,4 @@
+using ArtistSite.Repositories;
 using ArtistSite.Services;
 using BusinessLayer;
 using DataLayer;
@@ -23,20 +24,22 @@ namespace ArtistSite
         {
             services.AddDbContext<ArtistContext>(cfg =>
             {
-                cfg.UseSqlServer(_config.GetConnectionString("ArtistConnectionString"));
+                cfg.UseSqlServer(@"Data Source=(localdb)\\ProjectsV13;Initial Catalog=ArtistSiteDb;Integrated Security=True;Connect Timeout=30;MultipleActiveResultSets=true;");
             });
 
             services.AddTransient<ArtistSeeder>();
 
             services.AddTransient<IMailService, NullMailService>();
 
+            services.AddTransient<IArtistRepository, ArtistRepository>();
+            services.AddTransient(typeof(IRepositoryAsync<>), typeof(RepositoryAsync<>));
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            //services.AddControllersWithViews()
-            //    .AddRazorRuntimeCompilation();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
 
-            //services.AddRazorPages();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
