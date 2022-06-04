@@ -32,6 +32,8 @@ namespace ArtistSite
             services.AddTransient<IMailService, NullMailService>();
 
             services.AddTransient<IArtistRepository, ArtistRepository>();
+            services.AddTransient<IContentRepository, ContentRepository>();
+            services.AddTransient<IExperienceRepository, ExperienceRepository>();
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(RepositoryAsync<>));
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
