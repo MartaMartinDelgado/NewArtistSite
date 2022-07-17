@@ -68,7 +68,7 @@ namespace ArtistSite.Controllers
         public IActionResult Artists()
         {
             var results = from a in _context.Artists
-                          orderby a.Username
+                          orderby a.Email
                           select a;
 
             return View(results.ToList());

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -18,13 +19,20 @@ namespace ArtistSite
 {
     public class Startup
     {
+        private readonly IConfiguration _config;
+
+        public Startup(IConfiguration config)
+        {
+            _config = config;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ArtistContext>(cfg =>
             {
-                cfg.UseSqlServer(@"Data Source=(localdb)\\ProjectsV13;Initial Catalog=ArtistSiteDb;Integrated Security=True;Connect Timeout=30;MultipleActiveResultSets=true;");
+                cfg.UseSqlServer(_config.GetConnectionString("ArtistContextDb"));
             });
 
             services.AddTransient<ArtistSeeder>();
@@ -35,8 +43,8 @@ namespace ArtistSite
             services.AddTransient<IContentRepository, ContentRepository>();
             services.AddTransient<IExperienceRepository, ExperienceRepository>();
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(RepositoryAsync<>));
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            //services.AddMvc()
+            //    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
