@@ -45,7 +45,7 @@ namespace ArtistSite
             using (var scope = scopeFactory.CreateScope())
             {
                 var seeder = scope.ServiceProvider.GetService<ArtistSeeder>();
-                seeder.Seed();
+                seeder.SeedAsync().Wait();
             }
 
         }

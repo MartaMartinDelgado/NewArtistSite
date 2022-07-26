@@ -1,6 +1,7 @@
 ﻿using ArtistSite.Services;
 using ArtistSite.ViewModels;
 using DataLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace ArtistSite.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet("experience")]
         public IActionResult Experience()
         {
