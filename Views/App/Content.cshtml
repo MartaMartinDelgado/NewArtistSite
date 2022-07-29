@@ -33,7 +33,7 @@
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Link">Content Name</label>
+                <label asp-for="Link">Link to Content</label>
                 <input type="url" asp-for="Link" class="form-control" />
                 <span asp-validation-for="Link" class="text-danger"></span>
             </div>
@@ -41,6 +41,10 @@
                 <label asp-for="PrivateContent">Private Content</label>
                 <input type="checkbox" asp-for="PrivateContent" class="form-control" />
                 <span asp-validation-for="PrivateContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <div class="text-success">@ViewBag.UsserMessage</div>
             </div>
         </form>
     </div>
