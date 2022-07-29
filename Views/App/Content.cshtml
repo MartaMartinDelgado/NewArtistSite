@@ -1,7 +1,22 @@
 ﻿@*@model IEnumerable<Content>
-<h1>Content</h1>
-<p>Count: @Model.Count()</p>
-@foreach (var c in Model)
-            {
-                <li>@c.ContentName</li>
-            }*@
+    <h1>Content</h1>
+    <p>Count: @Model.Count()</p>
+    @foreach (var c in Model)
+                {
+                    <li>@c.ContentName</li>
+                }*@
+@model ContentViewModel
+@{
+    ViewBag.Title = "Content";
+}
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+}
+<div>
+    <div>
+        <form>
+            <div></div>
+        </form>
+    </div>
+</div>

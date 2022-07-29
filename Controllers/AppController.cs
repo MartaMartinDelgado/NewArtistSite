@@ -1,8 +1,11 @@
-﻿using ArtistSite.Services;
+﻿using ArtistSite.Repositories;
+using ArtistSite.Services;
 using ArtistSite.ViewModels;
 using DataLayer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +16,28 @@ namespace ArtistSite.Controllers
 {
     public class AppController : Controller
     {
-        private readonly IMailService _mailService;
         private readonly ArtistContext _context;
+        private readonly UserManager<Artist> _userManager;
+        private readonly IExperienceRepository _experienceRepository;
 
-        public AppController(IMailService mailService, ArtistContext context)
+        public AppController(ArtistContext context, IExperienceRepository experienceRepository, UserManager<Artist> userManager)
         {
-            _mailService = mailService;
             _context = context;
+            _userManager = userManager;
+            _experienceRepository = experienceRepository;
         }
+
         public IActionResult Index()
         {
-            return View();
+            var results = _context.Artists.ToList();
+
+            foreach (var artist in results)
+            {
+                artist.Experiences = _context.Experiences.Where(x => x.Artist.Id == artist.Id).ToList();
+            }
+
+            return View(results.ToList());
+            //return View();
         }
 
         [Authorize]
@@ -34,16 +48,16 @@ namespace ArtistSite.Controllers
         }
 
         [HttpPost("experience")]
-        public IActionResult Experience(ExperienceViewModel model)
+        public async Task<IActionResult> Experience(ExperienceViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Save to Exp list
-                //test send email
-                _mailService.SendMessage("marta.martin.d93@gmail.com", model.ArtistRole, $"From: {model.ContactEmail}, Message: {model.RoleDescription}");
-                ViewBag.UserMessage = "Mail Sent";
-                ModelState.Clear();
+                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                var experience = new Experience(model.ArtistRole, model.StartDate, model.EndDate, model.RoleDescription, model.ContactEmail, currentUser);
 
+                _context.Experiences.Add(experience);
+                _context.SaveChanges();
+                ModelState.Clear();
             }
 
             return View();
@@ -57,14 +71,10 @@ namespace ArtistSite.Controllers
             return View();
         }
 
-        //public IActionResult Content()
-        //{
-        //    var results = from c in _context.Contents
-        //                  orderby c.Category
-        //                  select c;
-
-        //    return View(results.ToList());
-        //}
+        public IActionResult Content()
+        {
+            return View();
+        }
 
         [HttpGet("Artists")]
         public IActionResult Artists()

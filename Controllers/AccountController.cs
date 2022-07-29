@@ -45,11 +45,11 @@ namespace ArtistSite.Controllers
                 {
                     if (Request.Query.Keys.Contains("ReturnUrl"))
                     {
-                        Redirect(Request.Query["ReturnUrl"].First());
+                        return Redirect(Request.Query["ReturnUrl"].First());
                     }
                     else
                     {
-                        RedirectToAction("Experience", "App");
+                        return RedirectToAction("Experience", "App");
                     } 
                 }
             }

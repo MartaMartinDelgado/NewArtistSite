@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArtistSite.Repositories
 {
-    interface IExperienceRepository
+    public interface IExperienceRepository
     {
         IQueryable<Experience> Experiences { get; }
         Task<Experience> GetByIdAsync(int experienceId);
