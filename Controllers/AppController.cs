@@ -71,8 +71,25 @@ namespace ArtistSite.Controllers
             return View();
         }
 
+        [Authorize]
+        [HttpGet("content")]
         public IActionResult Content()
         {
+            return View();
+        }
+
+        [HttpPost("content")]
+        public async Task<IActionResult> Content(ContentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                var content = new Content(model.ContentName, model.DateRecorded, model.Category, model.Link, model.PrivateContent, currentUser);
+
+                _context.Contents.Add(content);
+                _context.SaveChanges();
+                ModelState.Clear();
+            }
             return View();
         }
 
