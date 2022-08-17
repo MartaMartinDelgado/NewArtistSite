@@ -46,13 +46,28 @@ namespace ArtistSite.Controllers
         }
 
         [Authorize]
+        [HttpGet("experience/{id:int}")]
+        public async Task<IActionResult> Experience(int id)
+        {
+            var experience = await _experienceRepository.GetByIdAsync(id);
+            var experienceViewModel = new ExperienceViewModel();
+
+            experienceViewModel.ArtistRole = experience.ArtistRole;
+            experienceViewModel.StartDate = experience.StartDate;
+            experienceViewModel.EndDate = experience.EndDate;
+            experienceViewModel.RoleDescription = experience.RoleDescription;
+            experienceViewModel.ContactEmail = experience.Contact;
+            return View(experienceViewModel);
+        }
+
+        [Authorize]
         [HttpGet("experience")]
         public IActionResult Experience()
         {
             return View();
         }
 
-        [HttpPost("experience")]
+        [HttpPost("experience/{id:int}")]
         public async Task<IActionResult> Experience(ExperienceViewModel model)
         {
             if (ModelState.IsValid)
@@ -61,8 +76,6 @@ namespace ArtistSite.Controllers
                 var experience = new Experience(model.ArtistRole, model.StartDate, model.EndDate, model.RoleDescription, model.ContactEmail, currentUser);
 
                 await _experienceRepository.InsertAsync(experience);
-                //_context.Experiences.Add(experience);
-                //_context.SaveChanges();
                 ModelState.Clear();
             }
 
@@ -75,10 +88,15 @@ namespace ArtistSite.Controllers
             ViewBag.Title = "Artist";
 
             var artist = _artistRepository.GetById(id);
-            artist.Experiences = _context.Experiences.Where(x => x.Artist.Id == artist.Id).ToList();
-            artist.Contents = _context.Contents.Where(x => x.Artist.Id == artist.Id && !x.PrivateContent).ToList();
-            
-            return View(artist);
+            var artistViewModel = new ArtistViewModel();
+            artistViewModel.FName = artist.FName;
+            artistViewModel.LName = artist.LName;
+            artistViewModel.Email = artist.Email;
+            artistViewModel.Bio = artist.Bio;
+            artistViewModel.Experiences = _context.Experiences.Where(x => x.Artist.Id == artist.Id).ToList();
+            artistViewModel.Contents = _context.Contents.Where(x => x.Artist.Id == artist.Id && !x.PrivateContent).ToList();
+
+            return View(artistViewModel);
         }
 
         [Authorize]

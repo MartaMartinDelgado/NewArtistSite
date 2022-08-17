@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Artist>
+﻿@model ArtistViewModel
     @{
         ViewBag.Title = "Artist";
     }
@@ -7,27 +7,25 @@
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
     }
 
-    <div class="row">
-        @foreach (var p in Model)
-        {
+    <div>
+        
         <div>
             @*<img src="~/img/AnaTest2.jpg" />*@
             <h3>
-                @p.FName @p.LName
+                @Model.FName @Model.LName
             </h3>
-            <ul>
-                <li>@p.Email</li>
-                <li>@p.Bio</li>
-
-            </ul>
+            <p class="font-weight-bold">@Model.Email</p>
+                <p>Bio: @Model.Bio</p>
+            <hr />
+            <h6>Experiences</h6>
             <div class="row">
-                @foreach (var e in p.Experiences)
+                @foreach (var e in Model.Experiences)
                 {
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="border bg-light rounded p-1">
+                        <h6>@e.ArtistRole</h6>
                         <ul>
-                            <li>@e.ArtistRole</li>
-                            <li>@e.StartDate - @e.EndDate</li>
+                            <li>@e.StartDate.ToShortDateString() - @e.EndDate.ToShortDateString()</li>
                             <li>@e.RoleDescription</li>
                             <li>@e.Contact</li>
                         </ul>
@@ -35,22 +33,22 @@
                 </div>
                 }
             </div>
+            <hr />
+            <h6>Contents</h6>
             <div class="row">
-                @foreach (var c in p.Contents)
+                @foreach (var c in Model.Contents)
                 {
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="border bg-light rounded p-1">
+                        <h6>@c.ContentName</h6>
                         <ul>
-                            <li>@c.ContentName</li>
-                            <li>@c.DateRecorded</li>
+                            <li>@c.DateRecorded.ToShortDateString()</li>
                             <li>@c.Category</li>
-                            <li><a>@c.Link</a></li>
+                            <li><a href="@c.Link">@c.Link</a></li>
                         </ul>
                     </div>
                 </div>
                 }
             </div>
         </div>
-
-        }
     </div>

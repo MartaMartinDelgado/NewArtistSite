@@ -7,7 +7,7 @@
 <div class="row">
     @foreach (var p in Model)
     {
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="border bg-light rounded p-1">
                 @*<img src="~/img/AnaTest2.jpg" />*@
                 <h3>
@@ -19,7 +19,7 @@
                     @foreach (var e in p.Experiences)
                     {
                         <li>@e.ArtistRole</li>
-                        <li>@e.StartDate - @e.EndDate</li>
+                        <li>@e.StartDate.ToShortDateString() - @e.EndDate.ToShortDateString()</li>
                     }
                 </ul>
                 <a asp-action="Artist" asp-route-id="@p.Id" asp-controller="App" id="updateContent" class="btn btn-success">View Artist</a>
