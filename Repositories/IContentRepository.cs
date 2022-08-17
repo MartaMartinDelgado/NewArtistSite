@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArtistSite.Repositories
 {
-    interface IContentRepository
+    public interface IContentRepository
     {
         IQueryable<Content> Contents { get; }
         Task<Content> GetByIdAsync(int contentId);

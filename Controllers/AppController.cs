@@ -19,13 +19,18 @@ namespace ArtistSite.Controllers
         private readonly ArtistContext _context;
         private readonly UserManager<Artist> _userManager;
         private readonly IExperienceRepository _experienceRepository;
+        private readonly IArtistRepository _artistRepository;
+        private readonly IContentRepository _contentRepository;
 
-        public AppController(ArtistContext context, IExperienceRepository experienceRepository, UserManager<Artist> userManager)
+        public AppController(ArtistContext context, IExperienceRepository experienceRepository, UserManager<Artist> userManager, IArtistRepository artistRepository, IContentRepository contentRepository)
         {
             _context = context;
             _userManager = userManager;
             _experienceRepository = experienceRepository;
+            _artistRepository = artistRepository;
+            _contentRepository = contentRepository;
         }
+
 
         public IActionResult Index()
         {
@@ -55,20 +60,25 @@ namespace ArtistSite.Controllers
                 var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
                 var experience = new Experience(model.ArtistRole, model.StartDate, model.EndDate, model.RoleDescription, model.ContactEmail, currentUser);
 
-                _context.Experiences.Add(experience);
-                _context.SaveChanges();
+                await _experienceRepository.InsertAsync(experience);
+                //_context.Experiences.Add(experience);
+                //_context.SaveChanges();
                 ModelState.Clear();
             }
 
             return View();
         }
 
-        [HttpGet("about")]
-        public IActionResult About()
+        [HttpGet("artist/{id:Guid}")]
+        public IActionResult Artist(Guid id)
         {
-            ViewBag.Title = "About";
+            ViewBag.Title = "Artist";
 
-            return View();
+            var artist = _artistRepository.GetById(id);
+            artist.Experiences = _context.Experiences.Where(x => x.Artist.Id == artist.Id).ToList();
+            artist.Contents = _context.Contents.Where(x => x.Artist.Id == artist.Id && !x.PrivateContent).ToList();
+            
+            return View(artist);
         }
 
         [Authorize]
@@ -86,6 +96,7 @@ namespace ArtistSite.Controllers
                 var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
                 var content = new Content(model.ContentName, model.DateRecorded, model.Category, model.Link, model.PrivateContent, currentUser);
 
+
                 _context.Contents.Add(content);
                 _context.SaveChanges();
                 ModelState.Clear();
@@ -93,14 +104,5 @@ namespace ArtistSite.Controllers
             return View();
         }
 
-        [HttpGet("Artists")]
-        public IActionResult Artists()
-        {
-            var results = from a in _context.Artists
-                          orderby a.Email
-                          select a;
-
-            return View(results.ToList());
-        }
     }
 }

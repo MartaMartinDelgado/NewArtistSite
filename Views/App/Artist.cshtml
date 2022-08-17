@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Artist>
+    @{
+        ViewBag.Title = "Artist";
+    }
+    @section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+    }
+
+    <div class="row">
+        @foreach (var p in Model)
+        {
+        <div>
+            @*<img src="~/img/AnaTest2.jpg" />*@
+            <h3>
+                @p.FName @p.LName
+            </h3>
+            <ul>
+                <li>@p.Email</li>
+                <li>@p.Bio</li>
+
+            </ul>
+            <div class="row">
+                @foreach (var e in p.Experiences)
+                {
+                <div class="col-md-3">
+                    <div class="border bg-light rounded p-1">
+                        <ul>
+                            <li>@e.ArtistRole</li>
+                            <li>@e.StartDate - @e.EndDate</li>
+                            <li>@e.RoleDescription</li>
+                            <li>@e.Contact</li>
+                        </ul>
+                    </div>
+                </div>
+                }
+            </div>
+            <div class="row">
+                @foreach (var c in p.Contents)
+                {
+                <div class="col-md-3">
+                    <div class="border bg-light rounded p-1">
+                        <ul>
+                            <li>@c.ContentName</li>
+                            <li>@c.DateRecorded</li>
+                            <li>@c.Category</li>
+                            <li><a>@c.Link</a></li>
+                        </ul>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        }
+    </div>

@@ -22,7 +22,7 @@
                         <li>@e.StartDate - @e.EndDate</li>
                     }
                 </ul>
-                <button id="updateContent" class="btn btn-success">Update Info</button>
+                <a asp-action="Artist" asp-route-id="@p.Id" asp-controller="App" id="updateContent" class="btn btn-success">View Artist</a>
             </div>
         </div>
     }

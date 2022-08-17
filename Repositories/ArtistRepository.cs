@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using DataLayer;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,11 @@ namespace ArtistSite.Repositories
 {
     public class ArtistRepository : IArtistRepository
     {
+        private readonly ArtistContext _context;
         private readonly IRepositoryAsync<Artist> _repository; 
-        public ArtistRepository(IRepositoryAsync<Artist> repository)
+        public ArtistRepository(IRepositoryAsync<Artist> repository, ArtistContext context)
         {
+            _context = context;
             _repository = repository;
         }
 
@@ -21,9 +24,9 @@ namespace ArtistSite.Repositories
             await _repository.DeleteAsync(artist);
         }
 
-        public async Task<Artist> GetByIdAsync(int artistId)
+        public Artist GetById(Guid artistId)
         {
-            return await _repository.GetByIdAsync(artistId);
+            return _context.Artists.FirstOrDefault(x => x.Id == artistId.ToString());
         }
 
         public async Task<Artist> InsertAsync(Artist artist)

@@ -20,6 +20,7 @@ namespace ArtistSite.Repositories
         public Task DeleteAsync(T entity)
         {
             _artistContext.Set<T>().Remove(entity);
+            _artistContext.SaveChanges();
             return Task.CompletedTask;
         }
 
@@ -31,12 +32,14 @@ namespace ArtistSite.Repositories
         public async Task<T> InsertAsync(T entity)
         {
             await _artistContext.Set<T>().AddAsync(entity);
+            await _artistContext.SaveChangesAsync();
             return entity;
         }
 
         public Task UpdateAsync(T entity)
         {
             _artistContext.Entry(entity).CurrentValues.SetValues(entity);
+            _artistContext.SaveChanges();
             return Task.CompletedTask;
         }
     }

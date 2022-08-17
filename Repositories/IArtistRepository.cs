@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ArtistSite.Repositories
 {
-    interface IArtistRepository
+    public interface IArtistRepository
     {
         IQueryable<Artist> Artists { get; }
-        Task<Artist> GetByIdAsync(int artistId);
+        Artist GetById(Guid artistId);
         Task<Artist> InsertAsync(Artist artist);
         Task UpdateAsync(Artist artist);
         Task DeleteAsync(Artist artist);
