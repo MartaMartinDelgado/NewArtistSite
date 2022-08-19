@@ -15,9 +15,9 @@ namespace ArtistSite.Repositories
         }
         public IQueryable<Content> Contents => _repository.Entities;
 
-        public async Task DeleteAsync(Content content)
+        public void DeleteAsync(Content content)
         {
-            await _repository.DeleteAsync(content);
+             _repository.DeleteAsync(content);
         }
 
         public async Task<Content> GetByIdAsync(int contentId)

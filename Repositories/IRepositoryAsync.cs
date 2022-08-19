@@ -11,6 +11,6 @@ namespace ArtistSite.Repositories
         Task<T> GetByIdAsync(int id);
         Task<T> InsertAsync(T entity);
         Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        void DeleteAsync(T entity);
     }
 }

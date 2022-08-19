@@ -17,11 +17,10 @@ namespace ArtistSite.Repositories
 
         public IQueryable<T> Entities => _artistContext.Set<T>();
 
-        public Task DeleteAsync(T entity)
+        public void DeleteAsync(T entity)
         {
             _artistContext.Set<T>().Remove(entity);
             _artistContext.SaveChanges();
-            return Task.CompletedTask;
         }
 
         public async Task<T> GetByIdAsync(int id)

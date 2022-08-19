@@ -29,6 +29,8 @@
                             <li>@e.RoleDescription</li>
                             <li>@e.Contact</li>
                         </ul>
+                        <a asp-action="Experience" asp-route-id="@e.Id" asp-controller="App" id="updateExperience" class="btn btn-success">Update</a>
+                        <a method="post" asp-action="DeleteExperience"  asp-route-id="@e.Id" asp-controller="App" id="deleteExperience" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
                 }

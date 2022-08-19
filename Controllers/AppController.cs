@@ -38,11 +38,44 @@ namespace ArtistSite.Controllers
 
             foreach (var artist in results)
             {
-                artist.Experiences = _context.Experiences.Where(x => x.Artist.Id == artist.Id).ToList();
+                artist.Experiences = _context.Experiences.Where(x => x.ArtistId == artist.Id).ToList();
             }
 
             return View(results.ToList());
             //return View();
+        }
+
+
+
+        [Authorize]
+        [HttpGet("experience")]
+        public IActionResult Experience()
+        {
+            return View();
+        }
+
+        [HttpPost("experience")]
+        public async Task<IActionResult> Experience(ExperienceViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                var experience = new Experience(model.ArtistRole, model.StartDate, model.EndDate, model.RoleDescription, model.ContactEmail, currentUser);
+
+                await _experienceRepository.InsertAsync(experience);
+                ModelState.Clear();
+            }
+
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost("deleteExperience/{id:int}")]
+        //[HttpPost("deleteExperience/{id:int}")]
+        public async Task DeleteExperience(int id)
+        {
+            var experience = await _experienceRepository.GetByIdAsync(id);
+            _experienceRepository.DeleteAsync(experience);
         }
 
         [Authorize]
@@ -60,26 +93,25 @@ namespace ArtistSite.Controllers
             return View(experienceViewModel);
         }
 
-        [Authorize]
-        [HttpGet("experience")]
-        public IActionResult Experience()
-        {
-            return View();
-        }
-
         [HttpPost("experience/{id:int}")]
-        public async Task<IActionResult> Experience(ExperienceViewModel model)
+        public async Task<IActionResult> Experience(int id, ExperienceViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
-                var experience = new Experience(model.ArtistRole, model.StartDate, model.EndDate, model.RoleDescription, model.ContactEmail, currentUser);
+                var experience = await _experienceRepository.GetByIdAsync(id);
+                experience.StartDate = model.StartDate;
+                experience.EndDate = model.EndDate;
+                experience.RoleDescription = model.RoleDescription;
+                experience.Contact = model.ContactEmail;
+                experience.ArtistRole = model.ArtistRole;
 
-                await _experienceRepository.InsertAsync(experience);
-                ModelState.Clear();
+                await _experienceRepository.UpdateAsync(experience);
+                //var user = _artistRepository.GetById()
+
+                return Redirect("/artist/" + Guid.Parse(experience.ArtistId));
             }
 
-            return View();
+            return View(model);
         }
 
         [HttpGet("artist/{id:Guid}")]
@@ -106,6 +138,7 @@ namespace ArtistSite.Controllers
             return View();
         }
 
+        // Create
         [HttpPost("content")]
         public async Task<IActionResult> Content(ContentViewModel model)
         {

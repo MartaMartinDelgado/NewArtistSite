@@ -15,9 +15,9 @@ namespace ArtistSite.Repositories
         }
         public IQueryable<Experience> Experiences => _repository.Entities;
 
-        public async Task DeleteAsync(Experience experience)
+        public void DeleteAsync(Experience experience)
         {
-            await _repository.DeleteAsync(experience);
+            _repository.DeleteAsync(experience);
         }
 
         public async Task<Experience> GetByIdAsync(int experienceId)

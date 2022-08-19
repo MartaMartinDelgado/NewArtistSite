@@ -12,6 +12,6 @@ namespace ArtistSite.Repositories
         Task<Experience> GetByIdAsync(int experienceId);
         Task<Experience> InsertAsync(Experience experience);
         Task UpdateAsync(Experience experience);
-        Task DeleteAsync(Experience experience);
+        void DeleteAsync(Experience experience);
     }
 }
