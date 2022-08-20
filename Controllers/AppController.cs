@@ -90,6 +90,7 @@ namespace ArtistSite.Controllers
             experienceViewModel.EndDate = experience.EndDate;
             experienceViewModel.RoleDescription = experience.RoleDescription;
             experienceViewModel.ContactEmail = experience.Contact;
+
             return View(experienceViewModel);
         }
 
@@ -99,11 +100,12 @@ namespace ArtistSite.Controllers
             if (ModelState.IsValid)
             {
                 var experience = await _experienceRepository.GetByIdAsync(id);
+
+                experience.ArtistRole = model.ArtistRole;
                 experience.StartDate = model.StartDate;
                 experience.EndDate = model.EndDate;
                 experience.RoleDescription = model.RoleDescription;
                 experience.Contact = model.ContactEmail;
-                experience.ArtistRole = model.ArtistRole;
 
                 await _experienceRepository.UpdateAsync(experience);
                 //var user = _artistRepository.GetById()
@@ -121,6 +123,7 @@ namespace ArtistSite.Controllers
 
             var artist = _artistRepository.GetById(id);
             var artistViewModel = new ArtistViewModel();
+
             artistViewModel.FName = artist.FName;
             artistViewModel.LName = artist.LName;
             artistViewModel.Email = artist.Email;
@@ -147,13 +150,60 @@ namespace ArtistSite.Controllers
                 var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
                 var content = new Content(model.ContentName, model.DateRecorded, model.Category, model.Link, model.PrivateContent, currentUser);
 
-
-                _context.Contents.Add(content);
-                _context.SaveChanges();
+                await _contentRepository.InsertAsync(content);
+                //_context.Contents.Add(content);
+                //_context.SaveChanges();
                 ModelState.Clear();
             }
             return View();
         }
 
+        //Delete
+        [Authorize]
+        [HttpPost("deleteContent/{id:int}")]
+        public async Task DeleteContent(int id)
+        {
+            var content = await _contentRepository.GetByIdAsync(id);
+            _contentRepository.DeleteAsync(content);
+        }
+
+        //Display Content Updated /to be Updated
+        [Authorize]
+        [HttpGet("Content/{id:int}")]
+        public async Task<IActionResult> Content(int id)
+        {
+            var content = await _contentRepository.GetByIdAsync(id);
+            var contentViewModel = new ContentViewModel();
+
+            contentViewModel.ContentName = content.ContentName;
+            contentViewModel.DateRecorded = content.DateRecorded;
+            contentViewModel.Category = content.Category;
+            contentViewModel.Link = content.Link;
+            contentViewModel.PrivateContent = content.PrivateContent;
+
+            return View(contentViewModel);
+        }
+
+        //Update Content
+        [HttpPost("Content/{id:int")]
+        public async Task<IActionResult> Content(int id, ContentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var content = await _contentRepository.GetByIdAsync(id);
+
+                content.ContentName = model.ContentName;
+                content.DateRecorded = model.DateRecorded;
+                content.Category = model.Category;
+                content.Link = model.Link;
+                content.PrivateContent = model.PrivateContent;
+
+                await _contentRepository.UpdateAsync(content);
+
+                return Redirect("/artist/" + Guid.Parse(content.ArtistId));
+            }
+
+            return View(model);
+        }
     }
 }
