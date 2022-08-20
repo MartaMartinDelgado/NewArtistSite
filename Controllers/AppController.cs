@@ -135,6 +135,24 @@ namespace ArtistSite.Controllers
         }
 
         [Authorize]
+        [HttpPost("Artist/{id:int}")]
+        public IActionResult Artist(Guid id, ArtistViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var artist =  _artistRepository.GetById(id);
+
+                artist.FName = model.FName;
+                artist.LName = model.LName;
+                artist.Email = model.Email;
+                artist.Bio = model.Bio;
+
+                return View(model);
+            }
+            return View(model);
+        }
+
+        [Authorize]
         [HttpGet("content")]
         public IActionResult Content()
         {
@@ -185,7 +203,7 @@ namespace ArtistSite.Controllers
         }
 
         //Update Content
-        [HttpPost("Content/{id:int")]
+        [HttpPost("Content/{id:int}")]
         public async Task<IActionResult> Content(int id, ContentViewModel model)
         {
             if (ModelState.IsValid)

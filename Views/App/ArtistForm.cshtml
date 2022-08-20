@@ -1,0 +1,41 @@
+﻿@model ArtistViewModel
+    @{
+        ViewBag.Title = "ArtistForm";
+    }
+    @section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+    }
+
+<div class="col-md-6 offset-md-3">
+    <div class="card card-body bg-light">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-group">
+                <label asp-for="FName">Name</label>
+                <input asp-for="FName" class="form-control" />
+                <span asp-validation-for="FName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LName">Surname</label>
+                <input asp-for="LName" class="form-control" />
+                <span asp-validation-for="LName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email Address</label>
+                <input type="email" asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bio">Bio</label>
+                <textarea rows="4" asp-for="Bio" class="form-control"></textarea>
+                <span asp-validation-for="Bio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">@*<i class="fas fa-envelope"></i> *@Save</button>
+                <div class="text-success">@ViewBag.UserMessage</div>
+            </div>
+        </form>
+    </div>
+</div>

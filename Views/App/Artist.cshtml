@@ -15,24 +15,25 @@
                 @Model.FName @Model.LName
             </h3>
             <p class="font-weight-bold">@Model.Email</p>
-                <p>Bio: @Model.Bio</p>
+            <p>Bio: @Model.Bio</p>
+            <a asp-action="ArtistForm" asp-route-id="@Model.Id" asp-controller="App" id="updateArtist" class="btn btn-success">Update</a>
             <hr />
             <h6>Experiences</h6>
             <div class="row">
                 @foreach (var e in Model.Experiences)
                 {
-                <div class="col-md-4">
-                    <div class="border bg-light rounded p-1">
-                        <h6>@e.ArtistRole</h6>
-                        <ul>
-                            <li>@e.StartDate.ToShortDateString() - @e.EndDate.ToShortDateString()</li>
-                            <li>@e.RoleDescription</li>
-                            <li>@e.Contact</li>
-                        </ul>
-                        <a asp-action="Experience" asp-route-id="@e.Id" asp-controller="App" id="updateExperience" class="btn btn-success">Update</a>
-                        <a method="post" asp-action="DeleteExperience"  asp-route-id="@e.Id" asp-controller="App" id="deleteExperience" class="btn btn-danger">Delete</a>
+                    <div class="col-md-4">
+                        <div class="border bg-light rounded p-1">
+                            <h6>@e.ArtistRole</h6>
+                            <ul>
+                                <li>@e.StartDate.ToShortDateString() - @e.EndDate.ToShortDateString()</li>
+                                <li>@e.RoleDescription</li>
+                                <li>@e.Contact</li>
+                            </ul>
+                            <a asp-action="Experience" asp-route-id="@e.Id" asp-controller="App" id="updateExperience" class="btn btn-success">Update</a>
+                            <a method="post" asp-action="DeleteExperience" asp-route-id="@e.Id" asp-controller="App" id="deleteExperience" class="btn btn-danger">Delete</a>
+                        </div>
                     </div>
-                </div>
                 }
             </div>
             <hr />
@@ -40,16 +41,18 @@
             <div class="row">
                 @foreach (var c in Model.Contents)
                 {
-                <div class="col-md-4">
-                    <div class="border bg-light rounded p-1">
-                        <h6>@c.ContentName</h6>
-                        <ul>
-                            <li>@c.DateRecorded.ToShortDateString()</li>
-                            <li>@c.Category</li>
-                            <li><a href="@c.Link">@c.Link</a></li>
-                        </ul>
+                    <div class="col-md-4">
+                        <div class="border bg-light rounded p-1">
+                            <h6>@c.ContentName</h6>
+                            <ul>
+                                <li>@c.DateRecorded.ToShortDateString()</li>
+                                <li>@c.Category</li>
+                                <li><a href="@c.Link">@c.Link</a></li>
+                            </ul>
+                            <a asp-action="Content" asp-route-id="@c.Id" asp-controller="App" id="updateContent" class="btn btn-success">Update</a>
+                            <a method="post" asp-action="DeleteContent" asp-route-id="@c.Id" asp-controller="App" id="deleteContent" class="btn btn-danger">Delete</a>
+                        </div>
                     </div>
-                </div>
                 }
             </div>
         </div>
