@@ -3,6 +3,7 @@
 		"Favourite": "Blue"
 	},
 	"ConnectionStrings": {
-		"ArtistContextDb": "Data Source=(localdb)\\ProjectsV13;Initial Catalog=ArtistSiteDb;Integrated Security=True;Connect Timeout=30;MultipleActiveResultSets=true;"
+		"ArtistContextDb": "Server=tcp:artistsiteserver.database.windows.net,1433; Initial Catalog=ArtistSiteDB;Persist Security Info=False;User ID=as_admin;Password=Martin*510;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+		//"ArtistContextDb": "Data Source=(localdb)\\ProjectsV13;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
 	}
 }
