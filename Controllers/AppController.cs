@@ -124,33 +124,19 @@ namespace ArtistSite.Controllers
             var artist = _artistRepository.GetById(id);
             var artistViewModel = new ArtistViewModel();
 
+            artistViewModel.Id = new Guid(artist.Id);
             artistViewModel.FName = artist.FName;
             artistViewModel.LName = artist.LName;
             artistViewModel.Email = artist.Email;
             artistViewModel.Bio = artist.Bio;
             artistViewModel.Experiences = _context.Experiences.Where(x => x.Artist.Id == artist.Id).ToList();
-            artistViewModel.Contents = _context.Contents.Where(x => x.Artist.Id == artist.Id && !x.PrivateContent).ToList();
+            artistViewModel.Contents = _context.Contents.Where(x => x.Artist.Id == artist.Id).ToList();
+            //artistViewModel.Contents = _context.Contents.Where(x => x.Artist.Id == artist.Id && !x.PrivateContent).ToList();
 
             return View(artistViewModel);
         }
 
-        [Authorize]
-        [HttpPost("Artist/{id:int}")]
-        public IActionResult Artist(Guid id, ArtistViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var artist =  _artistRepository.GetById(id);
-
-                artist.FName = model.FName;
-                artist.LName = model.LName;
-                artist.Email = model.Email;
-                artist.Bio = model.Bio;
-
-                return View(model);
-            }
-            return View(model);
-        }
+       
 
         [Authorize]
         [HttpGet("content")]

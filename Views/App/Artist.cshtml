@@ -16,7 +16,7 @@
             </h3>
             <p class="font-weight-bold">@Model.Email</p>
             <p>Bio: @Model.Bio</p>
-            <a asp-action="ArtistForm" asp-route-id="@Model.Id" asp-controller="App" id="updateArtist" class="btn btn-success">Update</a>
+            <a asp-action="Update" asp-route-id="@Model.Id" asp-controller="Artists" id="updateArtist" class="btn btn-success">Update</a>
             <hr />
             <h6>Experiences</h6>
             <div class="row">

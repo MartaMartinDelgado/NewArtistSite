@@ -26,7 +26,8 @@ namespace ArtistSite.Repositories
 
         public Artist GetById(Guid artistId)
         {
-            return _context.Artists.FirstOrDefault(x => x.Id == artistId.ToString());
+            var artist = _context.Artists.FirstOrDefault(x => x.Id == artistId.ToString());
+            return artist;
         }
 
         public async Task<Artist> InsertAsync(Artist artist)
