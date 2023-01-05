@@ -10,6 +10,7 @@ namespace ArtistSite.ViewModels
     public class ArtistViewModel
     {
         public Guid Id { get; set; }
+        public Guid CurrentUserId { get; set; }
         [Required]
         public string FName { get; set; }
         [Required]

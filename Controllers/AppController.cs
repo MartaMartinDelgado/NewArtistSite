@@ -117,14 +117,24 @@ namespace ArtistSite.Controllers
         }
 
         [HttpGet("artist/{id:Guid}")]
-        public IActionResult Artist(Guid id)
+        public async Task<IActionResult> Artist(Guid id)
         {
             ViewBag.Title = "Artist";
+
+            Guid currentUserId = Guid.Empty;
+
+            try
+            {
+                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                currentUserId = new Guid(currentUser.Id);
+            }
+            catch (Exception ex) { }
 
             var artist = _artistRepository.GetById(id);
             var artistViewModel = new ArtistViewModel();
 
             artistViewModel.Id = new Guid(artist.Id);
+            artistViewModel.CurrentUserId = currentUserId;
             artistViewModel.FName = artist.FName;
             artistViewModel.LName = artist.LName;
             artistViewModel.Email = artist.Email;

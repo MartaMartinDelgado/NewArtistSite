@@ -17,7 +17,6 @@ namespace Model
         public ICollection<Experience> Experiences { get; set; }
         public ICollection<Content> Contents { get; set; }
 
-
         public Artist()
         { }
 
